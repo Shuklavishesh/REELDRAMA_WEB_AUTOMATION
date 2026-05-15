@@ -1,0 +1,8 @@
+{
+  "login_page": {
+    "mobile_input": "//input[contains(@class,'iti__tel-input')]",
+    "get_otp_btn": "//button[.//div[normalize-space()='Get OTP']]",
+    "otp_input": "//input[@maxlength='1']",
+    "verify_otp_btn": "//button[.//div[normalize-space()='Verify OTP']]"
+  }
+}

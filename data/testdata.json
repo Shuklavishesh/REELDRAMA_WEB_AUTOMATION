@@ -1,0 +1,18 @@
+{
+  "valid_user": {
+    "mobile": "8299445948",
+    "email": "testuser@gmail.com"
+  },
+
+  "invalid_user": {
+    "mobile_short": "12345",
+    "mobile_alpha": "abcd123",
+    "email_invalid": "test@.com"
+  },
+
+  "otp": {
+    "valid": "543333",
+    "invalid": "000000",
+    "expired": "111111"
+  }
+}

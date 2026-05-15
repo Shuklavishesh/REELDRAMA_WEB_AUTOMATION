@@ -1,0 +1,86 @@
+{
+  "TC_LOGIN_001": {
+    "objective": "To Verify valid mobile login",
+    "method": "test_valid_login"
+  },
+  "TC_LOGIN_MOB_002": {
+    "objective": "Check login behavior when the mobile number field is left blank.",
+    "method": "test_login_mobile_blank"
+  },
+  "TC_LOGIN_MOB_003": {
+    "objective": "To Validate invalid mobile (<10 digits)",
+    "method": "test_login_mobile_invalid_short"
+  },
+  "TC_LOGIN_MOB_004": {
+    "objective": "To Validate wrong OTP message",
+    "method": "test_login_wrong_otp"
+  },
+  "TC_LOGIN_EMAIL_005": {
+    "objective": "To Verify valid email login",
+    "method": "test_login_email_mode_not_implemented"
+  },
+  "TC_LOGIN_EMAIL_006": {
+    "objective": "To Validate invalid email",
+    "method": "test_login_email_mode_not_implemented"
+  },
+  "TC_LOGIN_EMAIL_007": {
+    "objective": "To Check empty email validation",
+    "method": "test_login_email_mode_not_implemented"
+  },
+  "TC_LOGIN_QR_008": {
+    "objective": "To Verify QR visibility",
+    "method": "test_login_qr_not_implemented"
+  },
+  "TC_LOGIN_QR_009": {
+    "objective": "To Validate QR scan flow",
+    "method": "test_login_qr_not_implemented"
+  },
+  "TC_OTP_Validation_010": {
+    "objective": "To Verify login succeeds with valid OTP",
+    "method": "test_valid_login"
+  },
+  "TC_OTP_Validation_011": {
+    "objective": "To Verify system rejects incorrect OTP",
+    "method": "test_login_wrong_otp"
+  },
+  "TC_OTP_Validation_012": {
+    "objective": "To Verify blank OTP validation",
+    "method": "test_login_mobile_blank"
+  },
+  "TC_OTP_Validation_013": {
+    "objective": "To Verify incomplete OTP (less than 6 digits)",
+    "method": "test_login_wrong_otp"
+  },
+  "TC_OTP_validation_021": {
+    "objective": "To Verify OTP timer after screen lock",
+    "method": "test_login_expired_otp"
+  },
+  "TC_OTP_Validation_014": {
+    "objective": "To Verify expired OTP behavior",
+    "method": "test_login_expired_otp"
+  },
+  "TC_ReSend_OTP__Validation_015": {
+    "objective": "To Verify Resend OTP sends a new OTP",
+    "method": "test_valid_login"
+  },
+  "TC_ReSend_OTP__Validation_016": {
+    "objective": "To Verify OTP boxes reset after resend",
+    "method": "test_valid_login"
+  },
+  "TC_ReSend_OTP__Validation_017": {
+    "objective": "To Verify max OTP resend limit enforcement",
+    "method": "test_valid_login"
+  },
+  "TC_ReSend_OTP__Validation_018": {
+    "objective": "To Verify login works with new OTP after resend",
+    "method": "test_valid_login"
+  },
+  "TC_ReSend_OTP__Validation_019": {
+    "objective": "To Verify old OTP becomes invalid after resend",
+    "method": "test_login_wrong_otp"
+  },
+  "TC_ReSend_OTP__Validation_020": {
+    "objective": "To Verify behavior when resending OTP with no internet",
+    "method": "test_valid_login"
+  }
+}
