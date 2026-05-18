@@ -3,6 +3,21 @@ import os
 from utils.driver_factory import get_driver
 from utils.json_reader import load_json
 from logs.logging_config import setup_logger
+import undetected_chromedriver as uc
+
+
+@pytest.fixture
+def driver():
+
+    driver = uc.Chrome()
+    driver.maximize_window()
+
+    yield driver
+
+    try:
+        driver.quit()
+    except Exception:
+        pass
 
 # Load test data once
 TEST_DATA = load_json("data/testdata.json")
