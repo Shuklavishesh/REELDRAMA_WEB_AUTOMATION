@@ -51,7 +51,7 @@
     "objective": "To Verify incomplete OTP (less than 6 digits)",
     "method": "test_login_wrong_otp"
   },
-  "TC_OTP_validation_021": {
+  "TC_OTP_validation_014": {
     "objective": "To Verify OTP timer after screen lock",
     "method": "test_login_expired_otp"
   },
@@ -82,5 +82,125 @@
   "TC_ReSend_OTP__Validation_020": {
     "objective": "To Verify behavior when resending OTP with no internet",
     "method": "test_valid_login"
+  },
+
+  "TC_HTB_001": {
+    "objective": "To Verify logo is visible",
+    "method": "test_header_logo_visibility"
+  },
+  "TC_HTB_002": {
+    "objective": "To Verify all navigation pages",
+    "method": "test_header_navigation_pages"
+  },
+  "TC_HTB_003": {
+    "objective": "To Verify Subscribe button",
+    "method": "test_subscribe_button_visibility"
+  },
+  "TC_HTB_004": {
+    "objective": "To Verify menu header items",
+    "method": "test_header_menu_items"
+  },
+  "TC_HTB_005": {
+    "objective": "To Verify dynamic pages available",
+    "method": "test_dynamic_pages"
+  },
+  "TC_HTB_006": {
+    "objective": "To Verify static pages",
+    "method": "test_static_pages"
+  },
+  "TC_HTB_007": {
+    "objective": "To Verify menu header responsiveness",
+    "method": "test_header_responsiveness"
+  },
+  "TC_HTB_008": {
+    "objective": "To Verify menu header on refresh",
+    "method": "test_header_refresh"
+  },
+  "TC_HTB_009": {
+    "objective": "Ensure only one trailer audio plays at a time",
+    "method": "test_single_trailer_audio"
+  },
+  "TC_HTB_010": {
+    "objective": "To Validate smooth scrolling",
+    "method": "test_thumbnail_smooth_scroll"
+  },
+  "TC_HTB_011": {
+    "objective": "To Verify shimmer loading visibility",
+    "method": "test_shimmer_loading"
+  },
+
+  "TC_HBB_012": {
+    "objective": "To Verify footer is visible",
+    "method": "test_footer_visibility"
+  },
+  "TC_HBB_013": {
+    "objective": "To Verify store links",
+    "method": "test_store_links"
+  },
+  "TC_HBB_014": {
+    "objective": "To Verify social media icons",
+    "method": "test_social_icons"
+  },
+  "TC_HBB_015": {
+    "objective": "To Verify cookies link",
+    "method": "test_cookie_link"
+  },
+  "TC_HBB_016": {
+    "objective": "To Verify static links",
+    "method": "test_static_footer_links"
+  },
+  "TC_HBB_017": {
+    "objective": "To Verify footer responsiveness",
+    "method": "test_footer_responsiveness"
+  },
+  "TC_HBB_018": {
+    "objective": "To Verify footer on refresh",
+    "method": "test_footer_refresh"
+  },
+  "TC_HBB_019": {
+    "objective": "To Verify icons load on slow net",
+    "method": "test_footer_icons_slow_network"
+  },
+
+  "TC_CL_001": {
+    "objective": "To Verify content categories are displayed",
+    "method": "test_content_categories"
+  },
+  "TC_CL_002": {
+    "objective": "To Verify hover shows trailer for trailer content",
+    "method": "test_hover_play_trailer"
+  },
+  "TC_CL_003": {
+    "objective": "To Verify hover does not play trailer for non-trailer content",
+    "method": "test_hover_non_trailer"
+  },
+  "TC_CL_004": {
+    "objective": "To Verify horizontal thumbnail aspect ratio",
+    "method": "test_horizontal_thumbnail_ratio"
+  },
+  "TC_CL_005": {
+    "objective": "To Verify vertical thumbnail aspect ratio",
+    "method": "test_vertical_thumbnail_ratio"
+  },
+  "TC_CL_006": {
+    "objective": "To Verify Continue Watching appears",
+    "method": "test_continue_watching_visible"
+  },
+  "TC_CL_007": {
+    "objective": "To Verify Continue Watching ordering",
+    "method": "test_continue_watching_order"
+  },
+  "TC_CL_008": {
+    "objective": "To Verify Continue Watching not shown",
+    "method": "test_continue_watching_without_login"
+  },
+  "TC_CL_009": {
+    "objective": "To Verify thumbnails load correctly",
+    "method": "test_thumbnail_load_slow_network"
+  },
+  "TC_CL_010": {
+    "objective": "To Verify no layout break between horizontal and vertical cards",
+    "method": "test_content_layout_alignment"
   }
 }
+

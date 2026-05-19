@@ -1,0 +1,16 @@
+{
+  "servers": {
+    "testdriver": {
+      "command": "npx",
+      "args": [
+        "-p",
+        "testdriverai",
+        "testdriverai-mcp"
+      ],
+      "env": {
+        "TD_PREVIEW": "ide",
+        "TD_API_ROOT": "https://api.testdriver.ai"
+      }
+    }
+  }
+}
