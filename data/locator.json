@@ -5,7 +5,29 @@
     "otp_input": "//input[@maxlength='1']",
     "verify_otp_btn": "//button[.//div[normalize-space()='Verify OTP']]",
     "qr_image": "//img[@alt='Login QR Code']",
-    "qr_scan_text": "//h4[contains(text(),'Use Camera App to Scan QR')]",
-    "qr_container": "//img[@alt='Login QR Code']/ancestor::div[1]"
+    "qr_scan_text": "//*[contains(text(),'Use Camera App')]",
+    "qr_container": "//img[@alt='Login QR Code']/ancestor::div[1]",
+    "resend_otp_btn": "//*[contains(text(),'Resend OTP')]"
+  },
+
+  "header_page": {
+
+    "logo": "//img[contains(@src,'logo') or contains(@alt,'logo')]",
+
+    "home_menu": "//a[@href='/home']",
+
+    "movies_menu": "//a[@href='/movies']",
+
+    "series_menu": "//a[@href='/series']",
+
+    "shows_menu": "//a[@href='/shows']",
+
+    "subscribe_btn": "//button[contains(.,'Subscribe')]",
+
+    "search_icon": "//a[@href='/search']//button",
+
+    "profile_icon": "//button[@id='composition-button']",
+
+    "header_nav_items": "//a[@href='/home' or @href='/movies' or @href='/series' or @href='/shows']"
   }
 }

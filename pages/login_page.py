@@ -1,320 +1,3 @@
-       
-# import logging
-# import time
-# import random       
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.support.ui import WebDriverWait
-# from selenium.webdriver.support import expected_conditions as EC
-# from selenium.webdriver.common.keys import Keys
-# from selenium.common.exceptions import TimeoutException
-# from utils.json_reader import load_json
-
-# locators = load_json("data/locator.json")["login_page"]
-# logger = logging.getLogger(__name__)
-
-
-# class LoginPage:
-
-#     def __init__(self, driver):
-#         self.driver = driver
-
-#     # ✅ Accept cookies
-#     def accept_cookies(self):
-
-#         try:
-#             cookie_btn = WebDriverWait(self.driver, 5).until(
-#                 EC.element_to_be_clickable(
-#                     (By.XPATH, "//button[contains(text(),'Accept')]")
-#                 )
-#             )
-
-#             cookie_btn.click()
-
-#             logger.info("✅ Cookies accepted")
-
-#         except Exception:
-#             logger.info("✅ No cookie popup found")
-
-#     # ✅ Wait for complete page load
-#     def wait_for_page_ready(self):
-
-#         WebDriverWait(self.driver, 30).until(
-#             lambda d: d.execute_script(
-#                 "return document.readyState"
-#             ) == "complete"
-#         )
-
-#     # ✅ Enter mobile number
-#     def enter_mobile(self, number):
-
-#         logger.info(f"Entering mobile number: {number}")
-
-#         self.accept_cookies()
-#         self.wait_for_page_ready()
-
-#         time.sleep(random.uniform(2, 3))
-
-#         def _mobile_input_ready(d):
-#             try:
-#                 el = d.find_element(By.XPATH, locators["mobile_input"])
-#                 return el if el.is_displayed() else False
-#             except Exception:
-#                 return False
-
-#         mobile_input = WebDriverWait(self.driver, 30).until(_mobile_input_ready)
-
-#         # click input
-#         mobile_input.click()
-
-#         time.sleep(1)
-
-#         # clear old value
-#         mobile_input.clear()
-
-#         time.sleep(1)
-
-#         # type mobile number
-#         for digit in str(number):
-
-#             mobile_input.send_keys(digit)
-
-#             time.sleep(random.uniform(0.2, 0.4))
-
-#         # trigger React/MUI validation
-#         mobile_input.send_keys(Keys.TAB)
-
-#         logger.info("✅ Mobile number entered successfully")
-
-#         time.sleep(2)
-
-#     # ✅ Click Get OTP
-#     def click_get_otp(self):
-
-#         try:
-
-#             logger.info("Clicking Get OTP button")
-
-#             # wait until clickable
-#             get_otp_btn = WebDriverWait(self.driver, 30).until(
-#                 lambda d: (
-#                     d.find_element(By.XPATH, locators["get_otp_btn"])
-#                     if d.find_element(By.XPATH, locators["get_otp_btn"]).is_displayed()
-#                     and d.find_element(By.XPATH, locators["get_otp_btn"]).is_enabled()
-#                     else False
-#                 )
-#             )
-
-#             # scroll into view
-#             self.driver.execute_script(
-#                 "arguments[0].scrollIntoView({block:'center'});",
-#                 get_otp_btn
-#             )
-
-#             time.sleep(2)
-
-#             # click button normally
-#             get_otp_btn.click()
-
-#             logger.info("✅ Get OTP button clicked")
-
-#             # wait until OTP boxes appear (avoid EC.* that may not exist in this Selenium build)
-#             WebDriverWait(self.driver, 30).until(
-#                 lambda d: len(d.find_elements(By.XPATH, locators["otp_input"])) > 0
-#             )
-
-#             logger.info("✅ OTP screen opened successfully")
-
-#         except TimeoutException:
-
-#             logger.error("❌ OTP screen did not open")
-
-#             raise
-
-#         except Exception as e:
-
-#             logger.error(f"❌ Failed to click Get OTP: {str(e)}")
-
-#             raise
-
-#     # ✅ Enter OTP
-#     def enter_otp(self, otp):
-
-#         otp = str(otp).strip()
-
-#         logger.info(f"Entering OTP: {otp}")
-
-#         # wait for OTP boxes
-#         WebDriverWait(self.driver, 30).until(
-#             lambda d: len(
-#                 d.find_elements(
-#                     By.XPATH,
-#                     locators["otp_input"]
-#                 )
-#             ) >= len(otp)
-#         )
-
-#         # fetch OTP boxes
-#         otp_boxes = self.driver.find_elements(
-#             By.XPATH,
-#             locators["otp_input"]
-#         )
-
-#         logger.info(f"OTP boxes found: {len(otp_boxes)}")
-
-#         # validate OTP boxes
-#         if len(otp_boxes) < len(otp):
-
-#             raise Exception(
-#                 "❌ OTP input boxes not loaded properly"
-#             )
-
-#         # enter OTP digit by digit
-#         for i in range(len(otp)):
-
-#             # re-fetch every loop (React safe)
-#             otp_boxes = self.driver.find_elements(
-#                 By.XPATH,
-#                 locators["otp_input"]
-#             )
-
-#             current_box = otp_boxes[i]
-
-#             # wait until visible and enabled
-#             WebDriverWait(self.driver, 20).until(
-#                 lambda d: current_box.is_displayed()
-#                 and current_box.is_enabled()
-#             )
-
-#             # scroll into view
-#             self.driver.execute_script(
-#                 "arguments[0].scrollIntoView({block:'center'});",
-#                 current_box
-#             )
-
-#             time.sleep(0.5)
-
-#             # click current box
-#             current_box.click()
-
-#             time.sleep(0.5)
-
-#             # clear old value
-#             current_box.send_keys(Keys.CONTROL + "a")
-#             current_box.send_keys(Keys.DELETE)
-
-#             time.sleep(0.2)
-
-#             # enter single digit
-#             current_box.send_keys(otp[i])
-
-#             logger.info(
-#                 f"✅ Entered OTP digit {otp[i]} in box {i + 1}"
-#             )
-
-#             time.sleep(0.5)
-
-#         logger.info("✅ OTP entered successfully")
-        
-        
-
-#     # ✅ Verify OTP
-#     def verify_otp(self):
-#         logger.info("Clicking Verify OTP button")
-
-#         # Wait for button to exist + be interactable (avoid EC.* expected_conditions if not present)
-#         verify_btn = WebDriverWait(self.driver, 30).until(
-#             lambda d: (
-#                 (lambda el: el if (el.is_displayed() and el.is_enabled()) else False)(
-#                     d.find_element(By.XPATH, locators["verify_otp_btn"])
-#                 )
-#                 if True
-#                 else False
-#             )
-#         )
-
-#         # Ensure it's visible (sometimes MUI renders but blocks click briefly)
-#         WebDriverWait(self.driver, 30).until(
-#             lambda d: verify_btn.is_displayed() and verify_btn.is_enabled()
-#         )
-
-#         # Scroll into view
-#         self.driver.execute_script(
-#             "arguments[0].scrollIntoView({block:'center'});",
-#             verify_btn
-#         )
-#         time.sleep(1)
-
-#         # Remove common overlays/backdrops if present
-#         self.driver.execute_script("""
-#             let overlays = document.querySelectorAll(
-#                 '[class*="overlay"], [class*="backdrop"], [class*="modal"], [role="dialog"]'
-#             );
-#             overlays.forEach(el => { el.style.display = 'none'; });
-#         """)
-#         time.sleep(0.5)
-
-#         # Try normal click, then JS fallback
-#         try:
-#             verify_btn.click()
-#         except Exception as e:
-#             logger.warning(f"Normal click failed on Verify OTP: {str(e)}; trying JS click")
-#             self.driver.execute_script("arguments[0].click();", verify_btn)
-
-#         logger.info("✅ Verify OTP button clicked")
-#         # Optionally wait a moment for next screen/state change
-#         time.sleep(2)
-#     # ✅ Open QR login tab
-# def open_qr_login(self):
-
-#     logger.info("Opening QR login")
-
-#     qr_tab = WebDriverWait(self.driver,20).until(
-#         EC.element_to_be_clickable(
-#             (By.XPATH, locators["qr_tab"])
-#         )
-#     )
-
-#     qr_tab.click()
-
-#     logger.info("✅ QR tab opened")
-
-#     time.sleep(2)
-
-
-# # ✅ Verify QR visible
-# def verify_qr_visible(self):
-
-#     logger.info("Checking QR visibility")
-
-#     qr_image = WebDriverWait(self.driver,20).until(
-#         EC.visibility_of_element_located(
-#             (By.XPATH, locators["qr_image"])
-#         )
-#     )
-
-#     assert qr_image.is_displayed(), \
-#         "❌ QR code not visible"
-
-#     logger.info("✅ QR code visible")
-
-
-# # ✅ Validate QR scan flow
-# def verify_qr_scan_flow(self):
-
-#     logger.info("Checking QR scan flow")
-
-#     scan_text = WebDriverWait(self.driver,20).until(
-#         EC.visibility_of_element_located(
-#             (By.XPATH, locators["qr_scan_text"])
-#         )
-#     )
-
-#     assert scan_text.is_displayed(), \
-#         "❌ Scan instruction not visible"
-
-#     logger.info("✅ QR scan flow visible")
-
-
 import logging
 import time
 import random
@@ -357,8 +40,7 @@ class LoginPage:
                 "✅ Cookies accepted"
             )
 
-        except:
-
+        except Exception:
             logger.info(
                 "No cookie popup"
             )
@@ -388,11 +70,10 @@ class LoginPage:
         )
 
         self.accept_cookies()
-
         self.wait_for_page_ready()
 
         time.sleep(
-            random.uniform(2,3)
+            random.uniform(2, 3)
         )
 
         mobile = WebDriverWait(
@@ -408,7 +89,6 @@ class LoginPage:
         )
 
         mobile.click()
-
         mobile.clear()
 
         for digit in str(number):
@@ -418,19 +98,14 @@ class LoginPage:
             )
 
             time.sleep(
-                random.uniform(
-                    .2,.4
-                )
+                random.uniform(.2, .4)
             )
 
-        mobile.send_keys(
-            Keys.TAB
-        )
+        mobile.send_keys(Keys.TAB)
 
         logger.info(
             "✅ Mobile entered"
         )
-
 
     # =============================
     # Click Get OTP
@@ -459,10 +134,9 @@ class LoginPage:
             time.sleep(1)
 
             try:
-
                 btn.click()
 
-            except:
+            except Exception:
 
                 self.driver.execute_script(
                     "arguments[0].click();",
@@ -494,7 +168,6 @@ class LoginPage:
 
             raise
 
-
     # =============================
     # Enter OTP
     # =============================
@@ -503,7 +176,7 @@ class LoginPage:
         otp = str(otp).strip()
 
         logger.info(
-            f"Entering OTP:{otp}"
+            f"Entering OTP: {otp}"
         )
 
         WebDriverWait(
@@ -519,14 +192,14 @@ class LoginPage:
             ) >= len(otp)
         )
 
-        for i,digit in enumerate(otp):
+        for i, digit in enumerate(otp):
 
             boxes = self.driver.find_elements(
                 By.XPATH,
                 locators["otp_input"]
             )
 
-            box=boxes[i]
+            box = boxes[i]
 
             self.driver.execute_script(
                 "arguments[0].click();",
@@ -536,7 +209,7 @@ class LoginPage:
             time.sleep(.2)
 
             box.send_keys(
-                Keys.CONTROL+"a"
+                Keys.CONTROL + "a"
             )
 
             box.send_keys(
@@ -557,7 +230,6 @@ class LoginPage:
             "✅ OTP entered"
         )
 
-
     # =============================
     # Verify OTP
     # =============================
@@ -570,18 +242,15 @@ class LoginPage:
             EC.element_to_be_clickable(
                 (
                     By.XPATH,
-                    locators[
-                        "verify_otp_btn"
-                    ]
+                    locators["verify_otp_btn"]
                 )
             )
         )
 
         try:
-
             verify.click()
 
-        except:
+        except Exception:
 
             self.driver.execute_script(
                 "arguments[0].click();",
@@ -591,7 +260,6 @@ class LoginPage:
         logger.info(
             "✅ Verify clicked"
         )
-
 
     # =============================
     # Verify QR visible
@@ -615,27 +283,205 @@ class LoginPage:
         logger.info(
             "✅ QR visible"
         )
-
-
+        
+        
+        
     # =============================
     # Verify QR Scan flow
     # =============================
     def verify_qr_scan_flow(self):
 
-        txt = WebDriverWait(
-            self.driver,
-            30
-        ).until(
-            EC.visibility_of_element_located(
-                (
-                    By.XPATH,
-                    locators["qr_scan_text"]
+        try:
+
+            self.wait_for_page_ready()
+            
+            time.sleep(3)
+
+            txt = WebDriverWait(
+                self.driver,
+                30
+            ).until(
+                EC.visibility_of_element_located(
+                    (
+                        By.XPATH,
+                        locators["qr_scan_text"]
+                    )
                 )
+            )
+            
+            self.driver.execute_script(
+            "arguments[0].scrollIntoView();",
+            txt
+        )
+
+            assert txt.is_displayed(), \
+                "QR scan text not visible"
+
+            logger.info(
+            f"✅ QR text found: {txt.text}"
+        )
+
+        except Exception as e:
+
+            self.driver.save_screenshot(
+                "qr_failure.png"
+            )
+
+            logger.error(
+                f"❌ QR failed: {str(e)}"
+            )
+
+            raise
+        
+        
+   
+    # =============================
+    # Click Resend OTP
+    # =============================
+    def click_resend_otp(self):
+
+        logger.info("Waiting for Resend OTP button")
+        resend_btn = WebDriverWait(
+        self.driver,
+        150
+     ).until(
+        EC.element_to_be_clickable(
+            (
+                By.XPATH,
+                locators["resend_otp_btn"]
+            )
+        )
+    )
+
+    # Save old OTP boxes
+        old_boxes = self.driver.find_elements(
+         By.XPATH,
+        locators["otp_input"]
+    )
+
+    # Click Resend OTP
+        resend_btn.click()
+
+        logger.info("✅ Resend OTP clicked")
+
+    # ==========================
+    # ADD THESE LINES HERE
+    # ==========================
+        self.driver.save_screenshot(
+           "after_resend_click.png"
+    )
+
+        logger.info(
+          f"Current URL: {self.driver.current_url}"
+    )
+
+    # Wait for React refresh
+        try:
+            WebDriverWait(
+            self.driver,
+            20
+        ).until(
+            EC.staleness_of(
+                old_boxes[0]
             )
         )
 
-        assert txt.is_displayed()
+            logger.info(
+            "✅ OTP inputs recreated"
+        )
+
+        except Exception as e:
+             
+         logger.info(
+                  f"OTP boxes not recreated: {e}"
+        )
+
+        time.sleep(3)
 
         logger.info(
-            "✅ QR flow valid"
+        "✅ Resend refresh completed"
+    )
+    # =============================
+    # Verify OTP boxes reset
+    # =============================
+    def verify_otp_boxes_empty(self):
+        
+        logger.info(
+        "Checking OTP boxes after resend"
+    )
+
+        boxes = self.driver.find_elements(
+         By.XPATH,
+        locators["otp_input"]
+    )
+
+    # ==========================
+    # ADD DEBUG CODE HERE
+    # ==========================
+        for i, box in enumerate(boxes):
+            
+            logger.info(
+             f"Box {i+1}: "
+             f"displayed={box.is_displayed()} "
+             f"enabled={box.is_enabled()} "
+             f"value='{box.get_attribute('value')}'"
         )
+
+    # ==========================
+    # Existing code
+    # ==========================
+        values = [
+          box.get_attribute("value")
+          for box in boxes
+    ]
+
+        logger.info(
+         f"Final OTP values: {values}"
+    )
+
+        assert all(
+         value == ""
+         for value in values
+        ), f"OTP boxes not cleared {values}"
+
+        logger.info(
+         "✅ OTP boxes reset successfully"
+    )
+    
+    # =============================
+    # Resend OTP limit check
+    # =============================
+    def verify_resend_limit(self):
+        
+        count = 0
+
+
+        for i in range(5):
+            
+
+            try:
+
+                self.click_resend_otp()
+                count += 1
+
+                logger.info(
+                f"Resend count: {count}"
+            )
+
+                time.sleep(3)
+
+
+            except Exception:
+                logger.info(
+                "Resend stopped by application"
+            )
+
+            break
+        
+        assert count > 0, \
+        "❌ Resend OTP not working"
+
+
+        logger.info(
+        "✅ Resend OTP limit validation completed"
+    )

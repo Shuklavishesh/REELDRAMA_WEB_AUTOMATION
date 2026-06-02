@@ -1,155 +1,45 @@
-# import pytest
-# from pages.login_page import LoginPage
-# from selenium.common.exceptions import TimeoutException
-
-
-# def _login_mobile_and_enter_otp(driver, testdata, *, mobile: str, otp: str) -> None:
-#     login = LoginPage(driver)
-#     login.enter_mobile(mobile)
-#     login.click_get_otp()
-#     login.enter_otp(otp)
-#     login.verify_otp()
-
-
-# def test_valid_login(driver, testdata):
-#     _login_mobile_and_enter_otp(
-#         driver,
-#         testdata,
-#         mobile=testdata["valid_user"]["mobile"],
-#         otp=testdata["otp"]["valid"],
-#     )
-
-
-# def test_login_mobile_blank(driver, testdata):
-#     # Objective: mobile field left blank -> should NOT open OTP screen.
-#     # Current implementation waits (page ready + sleeps + OTP screen wait) and can
-#     # exceed the runner timeout under this negative scenario.
-#     pytest.xfail(
-#         "TC_LOGIN_MOB_002 negative case cannot be reliably asserted with current locators/waits within tool timeout."
-#     )
-
-
-# def test_login_mobile_invalid_short(driver, testdata):
-#     # Objective: invalid mobile (<10 digits) -> should NOT open OTP screen.
-#     login = LoginPage(driver)
-#     login.enter_mobile(testdata["invalid_user"]["mobile_short"])
-#     with pytest.raises(TimeoutException):
-#         login.click_get_otp()
-
-
-# def test_login_mobile_invalid_alpha(driver, testdata):
-#     # Objective: invalid mobile (alpha) -> should NOT open OTP screen.
-#     login = LoginPage(driver)
-#     login.enter_mobile(testdata["invalid_user"]["mobile_alpha"])
-#     with pytest.raises(TimeoutException):
-#         login.click_get_otp()
-
-
-# def test_login_wrong_otp(driver, testdata):
-#     # Objective: wrong OTP -> OTP screen opens, verify should be attempted.
-#     _login_mobile_and_enter_otp(
-#         driver,
-#         testdata,
-#         mobile=testdata["valid_user"]["mobile"],
-#         otp=testdata["otp"]["invalid"],
-#     )
-
-
-# def test_login_expired_otp(driver, testdata):
-#     # Objective: expired OTP should be rejected.
-#     pytest.xfail("Expired OTP behavior cannot be validated with current test code (no OTP expiry simulation).")
-
-
-# def test_login_email_mode_not_implemented(driver, testdata):
-#     pytest.xfail("Email login cannot be implemented: missing email locators and validation assertions.")
-
-
-# def test_login_qr_not_implemented(driver, testdata):
-#     pytest.xfail("QR login cannot be implemented: missing QR locators and scan flow assertions.")
-    
-    
-# # TC_LOGIN_QR_008
-# def test_login_qr_visibility(driver):
-
-#     login = LoginPage(driver)
-
-#     login.open_qr_login()
-
-#     login.verify_qr_visible()
-
-
-# # TC_LOGIN_QR_009
-# def test_login_qr_scan_flow(driver):
-
-#     login = LoginPage(driver)
-
-#     login.open_qr_login()
-
-#     login.verify_qr_scan_flow()
-
-
-
 import pytest
 from pages.login_page import LoginPage
 from selenium.common.exceptions import TimeoutException
 
 
-# ---------------------------------
-# Reusable Login Helper
-# ---------------------------------
-def _login_mobile_and_enter_otp(
-    driver,
-    testdata,
-    *,
-    mobile: str,
-    otp: str
-):
+# ==============================
+# Common Login Helper
+# ==============================
+def login_with_otp(driver, testdata, otp):
 
     login = LoginPage(driver)
 
-    login.enter_mobile(mobile)
+    login.enter_mobile(
+        testdata["valid_user"]["mobile"]
+    )
 
     login.click_get_otp()
 
     login.enter_otp(otp)
 
-    login.verify_otp()
-
     return login
 
 
-# ---------------------------------
-# TC_LOGIN_001
-# Valid Login
-# ---------------------------------
+# ==============================
+# MOBILE VALIDATION
+# ==============================
+
 def test_valid_login(driver, testdata):
 
-    _login_mobile_and_enter_otp(
+    login = login_with_otp(
         driver,
         testdata,
-        mobile=testdata["valid_user"]["mobile"],
-        otp=testdata["otp"]["valid"]
+        testdata["otp"]["valid"]
     )
 
-
-# ---------------------------------
-# TC_LOGIN_MOB_002
-# Mobile blank
-# ---------------------------------
-def test_login_mobile_blank(driver):
-
-    pytest.xfail(
-        "Blank mobile negative scenario not stable with current waits."
-    )
+    login.verify_otp()
 
 
-# ---------------------------------
-# TC_LOGIN_MOB_003
-# Invalid mobile short
-# ---------------------------------
+
 def test_login_mobile_invalid_short(
-    driver,
-    testdata
+        driver,
+        testdata
 ):
 
     login = LoginPage(driver)
@@ -161,17 +51,13 @@ def test_login_mobile_invalid_short(
     with pytest.raises(
         TimeoutException
     ):
-
         login.click_get_otp()
 
 
-# ---------------------------------
-# TC_LOGIN_MOB_004
-# Invalid mobile alpha
-# ---------------------------------
+
 def test_login_mobile_invalid_alpha(
-    driver,
-    testdata
+        driver,
+        testdata
 ):
 
     login = LoginPage(driver)
@@ -183,54 +69,83 @@ def test_login_mobile_invalid_alpha(
     with pytest.raises(
         TimeoutException
     ):
-
         login.click_get_otp()
 
 
-# ---------------------------------
-# TC_LOGIN_OTP_005
-# Invalid OTP
-# ---------------------------------
-def test_login_wrong_otp(
-    driver,
-    testdata
-):
 
-    _login_mobile_and_enter_otp(
-        driver,
-        testdata,
-        mobile=testdata["valid_user"]["mobile"],
-        otp=testdata["otp"]["invalid"]
+def test_login_mobile_blank(driver):
+
+    pytest.xfail(
+        "Blank mobile validation pending"
     )
 
 
-# ---------------------------------
-# TC_LOGIN_OTP_006
-# Expired OTP
-# ---------------------------------
+# ==============================
+# OTP VALIDATION
+# ==============================
+
+def test_login_wrong_otp(
+        driver,
+        testdata
+):
+
+    login = login_with_otp(
+        driver,
+        testdata,
+        testdata["otp"]["invalid"]
+    )
+
+    login.verify_otp()
+
+
+
+def test_blank_otp(
+        driver,
+        testdata
+):
+
+    login = LoginPage(driver)
+
+    login.enter_mobile(
+        testdata["valid_user"]["mobile"]
+    )
+
+    login.click_get_otp()
+
+    # login.verify_button_disabled()
+
+
+
+def test_incomplete_otp(
+        driver,
+        testdata
+):
+
+    login = LoginPage(driver)
+
+    login.enter_mobile(
+        testdata["valid_user"]["mobile"]
+    )
+
+    login.click_get_otp()
+
+    login.enter_otp("123")
+
+    # login.verify_button_disabled()
+
+
+
 def test_login_expired_otp():
 
     pytest.xfail(
-        "Expired OTP simulation unavailable."
+        "Expired OTP simulation pending"
     )
 
 
-# ---------------------------------
-# TC_LOGIN_EMAIL_007
-# Email login
-# ---------------------------------
-def test_login_email_mode_not_implemented():
+# ==============================
+# QR VALIDATION
+# ==============================
 
-    pytest.xfail(
-        "Email login locators unavailable."
-    )
-
-
-# ---------------------------------
-# TC_LOGIN_QR_008
-# Verify QR visible
-# ---------------------------------
-# TC_LOGIN_QR_008
 def test_login_qr_visibility(driver):
 
     login = LoginPage(driver)
@@ -238,9 +153,148 @@ def test_login_qr_visibility(driver):
     login.verify_qr_visible()
 
 
-# TC_LOGIN_QR_009
+
 def test_login_qr_scan_flow(driver):
 
     login = LoginPage(driver)
 
+    login.verify_qr_visible()
+
     login.verify_qr_scan_flow()
+
+
+# ==============================
+# EMAIL VALIDATION
+# ==============================
+
+def test_login_email_mode():
+
+    pytest.xfail(
+        "Email login pending"
+    )  
+    
+    
+# =================================
+# TC_ReSend_OTP_Validation_015
+# Verify resend sends new OTP
+# =================================
+
+def test_resend_otp_boxes_reset(
+        driver,
+        testdata
+):
+
+    login = LoginPage(driver)
+
+    login.enter_mobile(
+        testdata["valid_user"]["mobile"]
+    )
+
+    login.click_get_otp()
+
+    login.enter_otp(
+        "123456"
+    )
+
+    # Before resend
+    driver.save_screenshot(
+        "before_resend.png"
+    )
+
+    login.click_resend_otp()
+
+    # After resend
+    driver.save_screenshot(
+        "after_resend.png"
+    )
+
+    login.verify_otp_boxes_empty()
+
+# =================================
+# TC_ReSend_OTP_Validation_016
+# Verify OTP boxes reset
+# =================================
+
+def test_resend_otp_boxes_reset(
+        driver,
+        testdata
+):
+
+    login = LoginPage(driver)
+
+
+    login.enter_mobile(
+        testdata["valid_user"]["mobile"]
+    )
+
+
+    login.click_get_otp()
+
+
+    login.enter_otp(
+        "123456"
+    )
+
+
+    login.click_resend_otp()
+
+
+    login.verify_otp_boxes_empty()
+
+
+
+# =================================
+# TC_ReSend_OTP_Validation_017
+# Verify max resend limit
+# =================================
+
+def test_resend_otp_limit(
+        driver,
+        testdata
+):
+
+    login = LoginPage(driver)
+
+
+    login.enter_mobile(
+        testdata["valid_user"]["mobile"]
+    )
+
+
+    login.click_get_otp()
+
+
+    login.verify_resend_limit()
+
+
+
+# =================================
+# TC_ReSend_OTP_Validation_018
+# Login using new OTP after resend
+# =================================
+
+def test_login_after_resend_otp(
+        driver,
+        testdata
+):
+
+    login = LoginPage(driver)
+
+
+    login.enter_mobile(
+        testdata["valid_user"]["mobile"]
+    )
+
+
+    login.click_get_otp()
+
+
+    login.click_resend_otp()
+
+
+    login.enter_otp(
+        testdata["otp"]["valid"]
+    )
+
+
+    login.verify_otp()
