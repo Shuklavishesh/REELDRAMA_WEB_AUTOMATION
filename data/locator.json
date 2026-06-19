@@ -7,6 +7,8 @@
     "qr_image": "//img[@alt='Login QR Code']",
     "qr_scan_text": "//*[contains(text(),'Use Camera App')]",
     "qr_container": "//img[@alt='Login QR Code']/ancestor::div[1]",
+    "captcha_token_input": "//input[@name='cf-turnstile-response']",
+    "captcha_success": "//*[contains(.,'Success') and contains(@class,'cf-turnstile')]",
     "resend_otp_btn": "//*[contains(text(),'Resend OTP')]"
   },
 
@@ -28,6 +30,7 @@
 
     "profile_icon": "//button[@id='composition-button']",
 
-    "header_nav_items": "//a[@href='/home' or @href='/movies' or @href='/series' or @href='/shows']"
+   "header_nav_items": "//nav[@aria-label='main navigation']//a"
+
   }
 }

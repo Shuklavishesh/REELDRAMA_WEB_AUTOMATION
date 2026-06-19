@@ -2,6 +2,9 @@ import pytest
 from pages.login_page import LoginPage
 from selenium.common.exceptions import TimeoutException
 
+pytestmark = pytest.mark.order(1)
+
+
 
 # ==============================
 # Common Login Helper
@@ -179,7 +182,10 @@ def test_login_email_mode():
 # Verify resend sends new OTP
 # =================================
 
-def test_resend_otp_boxes_reset(
+# TC_ReSend_OTP_Validation_015
+# Verify resend sends new OTP
+
+def test_resend_otp_sends_new_otp(
         driver,
         testdata
 ):
@@ -192,21 +198,13 @@ def test_resend_otp_boxes_reset(
 
     login.click_get_otp()
 
-    login.enter_otp(
-        "123456"
-    )
+    login.enter_otp("123456")
 
-    # Before resend
-    driver.save_screenshot(
-        "before_resend.png"
-    )
+    driver.save_screenshot("before_resend.png")
 
     login.click_resend_otp()
 
-    # After resend
-    driver.save_screenshot(
-        "after_resend.png"
-    )
+    driver.save_screenshot("after_resend.png")
 
     login.verify_otp_boxes_empty()
 

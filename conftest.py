@@ -4,6 +4,7 @@ import pytest
 from utils.driver_factory import get_driver
 from utils.json_reader import load_json
 from logs.logging_config import setup_logger
+from pages.login_page import LoginPage
 
 
 TEST_DATA = load_json("data/testdata.json")
@@ -109,7 +110,6 @@ def testdata():
 @pytest.fixture
 def login(driver, testdata):
 
-    from pages.login_page import LoginPage
 
     login_page = LoginPage(driver)
 
@@ -128,7 +128,6 @@ def login(driver, testdata):
     login_page.verify_otp()
 
     return login_page
-
 
 
 

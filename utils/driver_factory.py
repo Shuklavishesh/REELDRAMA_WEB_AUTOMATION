@@ -17,7 +17,7 @@ def get_driver(browser):
         options.add_argument("--disable-dev-shm-usage")
 
         driver = uc.Chrome(
-            version_main=148,   # match your Chrome browser version
+            version_main=149,   # match your Chrome browser version
             options=options,
             use_subprocess=True
         )
@@ -25,3 +25,7 @@ def get_driver(browser):
         return driver
 
     raise Exception(f"{browser} not supported")
+
+
+
+

@@ -108,29 +108,52 @@ class HeaderPage:
     # Verify Header Menu Items
     # ==========================
     def verify_menu_header_items(self):
+         
+
+        WebDriverWait(self.driver, 20).until(
+            lambda d: len(
+             d.find_elements(
+                 By.XPATH,
+                locators["header_nav_items"]
+            )
+        ) >= 5
+    )
 
         menus = self.driver.find_elements(
-            By.XPATH,
-            locators["header_nav_items"]
-        )
+         By.XPATH,
+         locators["header_nav_items"]
+    )
 
-        logger.info(
-            f"Menus found: {len(menus)}"
-        )
+        print(f"Menus found = {len(menus)}")
+
+        menu_names = []
 
         for menu in menus:
+            text = menu.text.strip()
 
-            logger.info(
-                f"Menu Text: {menu.text}"
-            )
-
-        assert len(menus) >= 4, \
-            f"❌ Expected at least 4 menus but found {len(menus)}"
-
-        logger.info(
-            "✅ Header menu validation passed"
+            print(
+               f"TEXT='{text}' "
+               f"HREF='{menu.get_attribute('href')}'"
         )
 
+            menu_names.append(text)
+
+        expected_menus = [
+          "Home",
+          "Movies",
+          "Series",
+          "Shows",
+          "Test"
+    ]
+
+        for expected in expected_menus:
+            
+            assert expected in menu_names, \
+            f"{expected} menu not found"
+
+        print("✅ All Header Menus Verified Successfully")
+        
+        
     # ==========================
     # TC_HTB_005
     # Verify Dynamic Pages
