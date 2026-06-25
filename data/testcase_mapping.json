@@ -201,6 +201,55 @@
   "TC_CL_010": {
     "objective": "To Verify no layout break between horizontal and vertical cards",
     "method": "test_content_layout_alignment"
+  },
+
+  "SUB_001": {
+    "objective": "Ensure all subscription plans are displayed",
+    "method": "test_all_subscription_plans_displayed"
+  },
+  "SUB_002": {
+    "objective": "To Validate correctness of plan details",
+    "method": "test_subscription_plan_details"
+  },
+  "SUB_003": {
+    "objective": "Ensure one plan is selected by default",
+    "method": "test_default_plan_selection"
+  },
+  "SUB_004": {
+    "objective": "Ensure price updates when selecting plan",
+    "method": "test_subscription_price_update"
+  },
+  "SUB_005": {
+    "objective": "To Check voucher input modal opens",
+    "method": "test_voucher_modal_open"
+  },
+  "SUB_006": {
+    "objective": "Ensure navigation to payment gateway",
+    "method": "test_payment_gateway_navigation"
+  },
+  "SUB_007": {
+    "objective": "Behavior when no plan selected",
+    "method": "test_proceed_without_plan"
+  },
+  "SUB_008": {
+    "objective": "Confirm correct price mapping",
+    "method": "test_subscription_price_mapping"
+  },
+  "SUB_009": {
+    "objective": "To Verify payment processing",
+    "method": "test_payment_processing"
+  },
+  "SUB_010": {
+    "objective": "To Verify price calculation",
+    "method": "test_voucher_price_calculation"
+  },
+  "SUB_011": {
+    "objective": "To Verify reload behavior",
+    "method": "test_subscription_page_reload"
+  },
+  "SUB_012": {
+    "objective": "To Verify package switch",
+    "method": "test_subscription_package_switch"
   }
 }
 

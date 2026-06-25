@@ -84,11 +84,29 @@ def test_header_menu(login):
     header.verify_menu_header_items()
 
 
-def test_header_dynamic_pages(login):
+# def test_header_dynamic_pages(login):
+
+#     header = HeaderPage(login.driver)
+
+#     header.verify_dynamic_pages()
+    
+def test_profile_menu_navigation(login):
 
     header = HeaderPage(login.driver)
 
-    header.verify_dynamic_pages()
+    header.verify_profile_menu_navigation()
+    
+    
+def test_my_account_page(login):
 
+    header = HeaderPage(login.driver)
 
+    header.verify_my_account_page()
+    
+def test_edit_profile_page(login):
 
+    header = HeaderPage(login.driver)
+
+    header.verify_my_account_page()
+
+    header.verify_edit_profile_page()

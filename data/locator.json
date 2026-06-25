@@ -14,23 +14,80 @@
 
   "header_page": {
 
-    "logo": "//img[contains(@src,'logo') or contains(@alt,'logo')]",
+  "logo": "//img[contains(@src,'logo') or contains(@alt,'logo')]",
 
-    "home_menu": "//a[@href='/home']",
+  "home_menu": "//a[@href='/home']",
 
-    "movies_menu": "//a[@href='/movies']",
+  "movies_menu": "//a[@href='/movies']",
 
-    "series_menu": "//a[@href='/series']",
+  "series_menu": "//a[@href='/series']",
 
-    "shows_menu": "//a[@href='/shows']",
+  "shows_menu": "//a[@href='/shows']",
 
-    "subscribe_btn": "//button[contains(.,'Subscribe')]",
+  "clip_menu": "//a[@href='/clip']",
 
-    "search_icon": "//a[@href='/search']//button",
+  "Test2_menu": "//a[@href='/shows']",
 
-    "profile_icon": "//button[@id='composition-button']",
+  "subscribe_btn": "//button[contains(.,'Subscribe')]",
 
-   "header_nav_items": "//nav[@aria-label='main navigation']//a"
+  "search_icon": "//a[@href='/search']//button",
 
-  }
+  "profile_icon": "//button[@id='composition-button']",
+
+  "header_nav_items": "//nav[@aria-label='main navigation']//a",
+
+  "profile_menu_items": "//ul[@id='composition-menu']//a",
+
+  "my_account": "//a[contains(@href,'tab=my-account')]",
+
+  "subscription_devices": "//a[contains(@href,'tab=subscription-devices')]",
+
+  "my_watchlist": "//a[contains(@href,'tab=my-watchlist')]",
+
+  "continue_watching": "//a[contains(@href,'tab=continue-watching')]",
+
+  "child_lock": "//a[contains(@href,'tab=child-lock')]",
+
+  "help_support": "//a[contains(@href,'tab=help-support')]",
+
+  "my_account_heading": "//h2[contains(text(),'My Account')]",
+
+  "profile_name": "//h6[contains(@class,'MuiTypography-h6')]",
+ 
+  "profile_mobile": "//p[contains(text(),'+91')]",
+
+  "email_label": "//h6[normalize-space()='Email Address']",
+  "email_value": "//h6[normalize-space()='Email Address']/following-sibling::p",
+
+   "gender_label": "//h6[normalize-space()='Gender']",
+   "gender_value": "//h6[normalize-space()='Gender']/following-sibling::p",
+
+  "dob_label": "//h6[normalize-space()='Date of Birth']",
+  "dob_value": "//h6[normalize-space()='Date of Birth']/following-sibling::p",
+
+   "country_label": "//h6[normalize-space()='Country']",
+   "country_value": "//h6[normalize-space()='Country']/following-sibling::p",
+
+   "country_code_label": "//h6[normalize-space()='Country Code']",
+   "country_code_value": "//h6[normalize-space()='Country Code']/following-sibling::p",
+
+  "remove_account_label": "//h6[contains(text(),'Remove My Account')]",
+
+  "edit_profile_btn": "//button[contains(.,'Edit Profile')]",
+
+  "edit_profile_heading": "//h2[contains(text(),'Edit My Profile')]",
+
+  "full_name_input": "//input[@id='fullName']",
+
+  "mobile_number_input": "//input[@id='mobileNumber']",
+
+  "email_input": "//input[@id='email']",
+
+  "country_input": "//input[@id='country']",
+
+  "country_code_input": "//input[@id='countrycode']",
+
+  "dob_input": "//input[contains(@class,'MuiPickersInputBase-input')]"
+  
+   }
 }

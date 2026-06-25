@@ -1,4 +1,6 @@
+import email
 import logging
+import profile
 import time
 
 from selenium.webdriver.common.by import By
@@ -143,7 +145,8 @@ class HeaderPage:
           "Movies",
           "Series",
           "Shows",
-          "Test"
+          "Clip",
+          "Test2"
     ]
 
         for expected in expected_menus:
@@ -153,42 +156,346 @@ class HeaderPage:
 
         print("✅ All Header Menus Verified Successfully")
         
+    
+    
+    def verify_profile_menu_navigation(self):
         
-    # ==========================
-    # TC_HTB_005
-    # Verify Dynamic Pages
-    # ==========================
-    def verify_dynamic_pages(self):
 
-        pages = [
-            "home_menu",
-            "movies_menu",
-            "series_menu",
-            "shows_menu"
-        ]
+        menu_items = [
+         ("my_account", "My Account"),
+         ("subscription_devices", "Subscription & Devices"),
+         ("my_watchlist", "My watchlist"),
+         ("continue_watching", "Continue watching"),
+         ("child_lock", "Child lock"),
+         ("help_support", "Help & Support")
+    ]
 
-        for page in pages:
-
-            element = WebDriverWait(
-                self.driver,
-                20
-            ).until(
-                EC.element_to_be_clickable(
-                    (
-                        By.XPATH,
-                        locators[page]
-                    )
+        for locator_name, menu_name in menu_items: 
+        # Open Profile Menu
+            profile = WebDriverWait(
+            self.driver,
+            20
+        ).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,
+                    locators["profile_icon"]
                 )
             )
+        )
 
-            element.click()
+            profile.click()
+
+        # Click Menu Item
+            menu = WebDriverWait(
+              self.driver,
+             20
+        ).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,
+                    locators[locator_name]
+                )
+            )
+        )
+
+            logger.info(f"Clicking: {menu_name}")
+
+            menu.click()
 
             time.sleep(2)
 
             logger.info(
-                f"✅ Dynamic page clicked: {page}"
-            )
+             f"✅ {menu_name} opened successfully"
+        )
 
-            logger.info(
-                f"Current URL: {self.driver.current_url}"
+            print(
+             f"{menu_name} URL = {self.driver.current_url}"
+        )
+
+            self.driver.back()
+
+            time.sleep(2)
+            
+            
+    def verify_my_account_page(self):
+
+    # Open Profile Menu
+        profile = WebDriverWait(
+        self.driver,
+        20
+        ).until(
+            EC.element_to_be_clickable(
+            (
+                By.XPATH,
+                locators["profile_icon"]
             )
+        )
+    )
+
+        profile.click()
+
+    # Click My Account
+        my_account = WebDriverWait(
+          self.driver,
+          20
+        ).until(
+            EC.element_to_be_clickable(
+            (
+                By.XPATH,
+                locators["my_account"]
+            )
+        )
+    )
+
+        my_account.click()
+
+    # Verify Heading
+        heading = WebDriverWait(
+          self.driver,
+           20
+    ).until(
+        EC.visibility_of_element_located(
+            (
+                By.XPATH,
+                locators["my_account_heading"]
+            )
+        )
+    )
+
+        assert heading.is_displayed(), \
+           "My Account heading not displayed"
+
+    # Verify User Name
+        username = WebDriverWait(
+        self.driver,
+          20
+    ).until(
+         EC.visibility_of_element_located(
+        (
+            By.XPATH,
+            locators["profile_name"]
+        )
+    )
+)
+
+        assert username.text.strip() != "", \
+            "User name is empty"
+
+    # Verify Mobile Number
+        mobile = WebDriverWait(
+        self.driver,
+        20
+    ).until(
+      EC.visibility_of_element_located(
+        (
+            By.XPATH,
+            locators["profile_mobile"]
+        )
+    )
+)
+        assert mobile.text.strip() != "", \
+        "Mobile number is empty"
+
+        email = self.driver.find_element(
+           By.XPATH,
+          locators["email_value"]
+    )
+
+        gender = self.driver.find_element(
+        By.XPATH,
+        locators["gender_value"]
+    )
+
+        dob = self.driver.find_element(
+        By.XPATH,
+        locators["dob_value"]
+    )
+
+        country = self.driver.find_element(
+        By.XPATH,
+        locators["country_value"]
+    )
+
+        country_code = self.driver.find_element(
+        By.XPATH,
+        locators["country_code_value"]
+    )
+
+        remove_account = self.driver.find_element(
+        By.XPATH,
+        locators["remove_account_label"]
+    )
+
+        assert email.text.strip() != ""
+        assert gender.text.strip() != ""
+        assert dob.text.strip() != ""
+        assert country.text.strip() != ""
+        assert country_code.text.strip() != ""
+        assert remove_account.is_displayed()
+       
+
+        logger.info("✅ My Account Page Verified")
+        
+        logger.info(f"Username      : {username.text}")
+        logger.info(f"Mobile        : {mobile.text}")
+        logger.info(f"Email        : {email.text}")
+        logger.info(f"Gender       : {gender.text}")
+        logger.info(f"DOB          : {dob.text}")
+        logger.info(f"Country      : {country.text}")
+        logger.info(f"Country Code : {country_code.text}")
+        logger.info(f"remove_account : {remove_account.text}")
+        
+    def verify_edit_profile_page(self):
+
+    # Click Edit Profile
+
+        edit_profile = WebDriverWait(
+        self.driver,
+        20
+    ).until(
+        EC.element_to_be_clickable(
+            (
+                By.XPATH,
+                locators["edit_profile_btn"]
+            )
+        )
+    )
+
+        edit_profile.click()
+
+        logger.info("✅ Edit Profile clicked")
+
+    # Verify Edit Profile Page
+
+        heading = WebDriverWait(
+          self.driver,
+          20
+    ).until(
+        EC.visibility_of_element_located(
+            (
+                By.XPATH,
+                locators["edit_profile_heading"]
+            )
+        )
+    )
+
+        assert heading.is_displayed(), \
+         "Edit My Profile page not opened"
+
+        logger.info("✅ Edit My Profile page opened")
+
+    # Verify Full Name field
+
+        full_name = WebDriverWait(
+           self.driver,
+           20
+    ).until(
+        EC.visibility_of_element_located(
+            (
+                By.XPATH,
+                locators["full_name_input"]
+            )
+        )
+    )
+        time.sleep(1)
+        assert full_name.is_displayed(), \
+        "Full Name field not visible"
+
+        full_name_value = full_name.get_attribute("value")
+
+        assert full_name_value.strip() != "", \
+        "Full Name is empty"
+        
+        time.sleep(2)
+        
+        logger.info(
+          f"✅ Full Name Found : {full_name_value}"
+    )
+        
+        
+        mobile = self.driver.find_element(
+        By.XPATH,
+        locators["mobile_number_input"]
+    )
+
+        mobile_value = mobile.get_attribute("value")
+
+        assert mobile_value.strip() != "", \
+        "Mobile Number is empty"
+        
+     
+
+        logger.info(
+          f"✅ Mobile Number : {mobile_value}"
+    )
+
+    # Email
+
+        email = self.driver.find_element(
+         By.XPATH,
+         locators["email_input"]
+    )
+
+        email_value = email.get_attribute("value")
+
+        assert email_value.strip() != "", \
+        "Email is empty"
+
+        logger.info(
+        f"✅ Email : {email_value}"
+    )
+
+    # Country
+
+        country = self.driver.find_element(
+        By.XPATH,
+        locators["country_input"]
+    )
+
+        country_value = country.get_attribute("value")
+
+        assert country_value.strip() != "", \
+        "Country is empty"
+
+        logger.info(
+         f"✅ Country : {country_value}"
+    )
+
+    # Country Code
+
+        country_code = self.driver.find_element(
+          By.XPATH,
+          locators["country_code_input"]
+    )
+
+        country_code_value = country_code.get_attribute("value")
+
+        assert country_code_value.strip() != "", \
+        "Country Code is empty"
+
+        logger.info(
+        f"✅ Country Code : {country_code_value}"
+    )
+
+    # Date Of Birth
+
+        dob = self.driver.find_element(
+         By.XPATH,
+         locators["dob_input"]
+    )
+
+        dob_value = dob.get_attribute("value")
+
+        assert dob_value.strip() != "", \
+        "DOB is empty"
+
+        logger.info(
+        f"✅ DOB : {dob_value}"
+    )
+        time.sleep(2)
+        
+        logger.info(
+        "✅ All Edit Profile Details Verified Successfully"
+    )
+        
