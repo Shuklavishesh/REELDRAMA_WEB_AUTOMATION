@@ -498,4 +498,194 @@ class HeaderPage:
         logger.info(
         "✅ All Edit Profile Details Verified Successfully"
     )
+       
+    def verify_gender(self):
+        gender = WebDriverWait(
+        self.driver,
+        20
+    ).until(
+        EC.visibility_of_element_located(
+            (
+                By.XPATH,
+                locators["gender_value"]
+            )
+        )
+    )
+
+        gender_value = gender.text.strip()
+
+        assert gender_value != "", "Gender is empty"
+
+        assert gender_value.lower() in [
+            "male",
+            "female",
+            "other"
+    ],  f"Invalid gender: {gender_value}"
+
+        logger.info(f"✅ Gender : {gender_value}")
         
+    def verify_subscription_devices_page(self):
+
+    # Verify Heading
+        heading = WebDriverWait(
+        self.driver,
+        20
+    ).until(
+        EC.visibility_of_element_located(
+            (
+                By.XPATH,
+                locators["subscription_heading"]
+            )
+        )
+    )
+
+        assert heading.is_displayed(), \
+        "Subscription & Devices heading not displayed"
+
+        logger.info("✅ Subscription & Devices heading displayed")
+
+    # Verify Plan
+        plan = WebDriverWait(
+        self.driver,
+        20
+    ).until(
+        EC.visibility_of_element_located(
+            (
+                By.XPATH,
+                locators["subscription_plan"]
+            )
+        )
+    )
+
+        assert plan.text.strip() != "", \
+        "Subscription Plan is empty"
+
+        logger.info(f"✅ Plan : {plan.text}")
+
+    # Verify Expiry Text
+        expiry = WebDriverWait(
+        self.driver,
+        20
+    ).until(
+        EC.visibility_of_element_located(
+            (
+                By.XPATH,
+                locators["subscription_expiry"]
+            )
+        )
+    )
+
+        assert "expires" in expiry.text.lower(), \
+        "Plan expiry text not found"
+
+        logger.info(f"✅ Expiry : {expiry.text}")
+
+    # Verify Upgrade Button
+        upgrade = WebDriverWait(
+        self.driver,
+        20
+    ).until(
+        EC.element_to_be_clickable(
+            (
+                By.XPATH,
+                locators["upgrade_btn"]
+            )
+        )
+    )
+
+        assert upgrade.is_displayed(), \
+        "Upgrade button not visible"
+
+        logger.info("✅ Upgrade button displayed")
+
+    # Verify Transaction History Button
+        transaction = WebDriverWait(
+        self.driver,
+        20
+    ).until(
+        EC.element_to_be_clickable(
+            (
+                By.XPATH,
+                locators["transaction_history_btn"]
+            )
+        )
+    )
+
+        assert transaction.is_displayed(), \
+        "Transaction History button not visible"
+
+        logger.info("✅ Transaction History button displayed")
+    
+    def verify_upgrade_button(self):
+        
+        upgrade = WebDriverWait(
+       self.driver,
+        20
+    ).until(
+        EC.element_to_be_clickable(
+            (
+                By.XPATH,
+                locators["upgrade_btn"]
+            )
+        )
+    )
+
+        logger.info("Clicking Upgrade Button")
+
+        upgrade.click()
+
+        WebDriverWait(
+        self.driver,
+        20
+    ).until(
+        lambda d: d.current_url != ""
+    )
+
+        logger.info(f"Current URL : {self.driver.current_url}")
+
+        assert "subscription" in self.driver.current_url.lower() \
+         or "upgrade" in self.driver.current_url.lower()
+
+        logger.info("✅ Upgrade navigation successful")
+
+        self.driver.back()
+    
+    def verify_transaction_history(self):
+
+        transaction = WebDriverWait(
+        self.driver,
+        20
+    ).until(
+        EC.element_to_be_clickable(
+            (
+                By.XPATH,
+                locators["transaction_history_btn"]
+            )
+        )
+    )
+
+        logger.info("Clicking Transaction History")
+
+        transaction.click()
+
+        WebDriverWait(
+        self.driver,
+        20
+    ).until(
+        lambda d: d.current_url != ""
+    )
+
+        logger.info(f"Current URL : {self.driver.current_url}")
+
+        assert (
+        "transaction" in self.driver.current_url.lower()
+        or "history" in self.driver.current_url.lower()
+    ), "Transaction History page not opened"
+
+        logger.info("✅ Transaction History page opened")
+
+        self.driver.back()
+    
+    
+      
+ 

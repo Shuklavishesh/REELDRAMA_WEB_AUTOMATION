@@ -87,7 +87,18 @@
 
   "country_code_input": "//input[@id='countrycode']",
 
-  "dob_input": "//input[contains(@class,'MuiPickersInputBase-input')]"
+  "dob_input": "//input[contains(@class,'MuiPickersInputBase-input')]",
+
+  "subscription_heading": "//h2[normalize-space()='Subscription & Devices']",
+
+"subscription_plan": "//h2[contains(normalize-space(),'VIP Plans')]",
+
+"subscription_expiry": "//h6[contains(.,'The plan expires on')]",
+
+"upgrade_btn": "//button[normalize-space()='Upgrade']",
+
+"transaction_history_btn": "//button[normalize-space()='Transaction History']"
+
   
    }
 }

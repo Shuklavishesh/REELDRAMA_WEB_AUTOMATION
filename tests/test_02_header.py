@@ -1,54 +1,3 @@
-# import pytest
-# from pages.header_page import HeaderPage
-
-
-# def test_header_complete_flow(login):
-
-#     header = HeaderPage(login.driver)
-   
-#     try:
-#         header.verify_logo_visible()
-#     except Exception as e:
-#         print(f"Logo Failed: {e}")
-
-#     try:
-#         header.verify_navigation_pages()
-#     except Exception as e:
-#         print(f"Navigation Failed: {e}")
-
-#     try:
-#         header.verify_subscribe_button()
-#     except Exception as e:
-#         print(f"Subscribe Failed: {e}")     
-
-#     try:
-#         header.verify_menu_header_items()
-#     except Exception as e:
-#         print(f"Menu Failed: {e}")
-
-#     try:
-#         header.verify_dynamic_pages()
-#     except Exception as e:
-#         print(f"Dynamic Pages Failed: {e}")
-
-
-
-
-# # def test_header_complete_flow(login):
-
-# #     header = HeaderPage(login.driver)
-
-# #     header.verify_logo_visible()
-
-# #     header.verify_navigation_pages()
-
-# #     header.verify_subscribe_button()
-
-# #     header.verify_menu_header_items()
-
-# #     header.verify_dynamic_pages()
-
-
 import pytest
 
 from pages.header_page import HeaderPage
@@ -103,10 +52,25 @@ def test_my_account_page(login):
 
     header.verify_my_account_page()
     
+    
 def test_edit_profile_page(login):
 
     header = HeaderPage(login.driver)
 
     header.verify_my_account_page()
+    header.verify_gender()
 
     header.verify_edit_profile_page()
+    
+def test_subscription_devices(login):
+
+    header = HeaderPage(login.driver)
+
+    header.verify_profile_menu_navigation()
+
+    header.verify_subscription_devices_page()
+
+    header.verify_upgrade_button()
+
+    header.verify_transaction_history()
+    
