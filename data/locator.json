@@ -89,16 +89,27 @@
 
   "dob_input": "//input[contains(@class,'MuiPickersInputBase-input')]",
 
-  "subscription_heading": "//h2[normalize-space()='Subscription & Devices']",
+"subscription_heading": "//h2[contains(.,'Subscription & Devices')]",
 
-"subscription_plan": "//h2[contains(normalize-space(),'VIP Plans')]",
+"subscription_plan": "//h2[contains(.,'VIP Plans')]",
 
 "subscription_expiry": "//h6[contains(.,'The plan expires on')]",
 
-"upgrade_btn": "//button[normalize-space()='Upgrade']",
+"upgrade_btn": "//button[contains(.,'Upgrade')]",
 
-"transaction_history_btn": "//button[normalize-space()='Transaction History']"
+"no_active_plan":"//h6[contains(.,'No active plan')]",
 
-  
+"no_active_plan_message": "//p[contains(text(),'active subscription')]",
+
+"view_subscription_btn": "//button[contains(.,'View Subscription Plans')]",
+
+"transaction_history_btn": "//button[contains(.,'Transaction History')]",
+
+"this_device_heading": "//h4[contains(normalize-space(),'This Device')]",
+
+"device_name": "//h4[contains(normalize-space(),'This Device')]/following::h6[1]",
+
+"last_used": "//h4[contains(normalize-space(),'This Device')]/following::span[contains(.,'Last used')][1]"
+
    }
 }

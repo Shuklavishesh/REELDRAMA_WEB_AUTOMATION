@@ -66,11 +66,12 @@ def test_subscription_devices(login):
 
     header = HeaderPage(login.driver)
 
-    header.verify_profile_menu_navigation()
+    header.open_subscription_devices()
 
     header.verify_subscription_devices_page()
 
-    header.verify_upgrade_button()
+    header.verify_view_subscription_button()
 
     header.verify_transaction_history()
-    
+
+    header.verify_this_device()

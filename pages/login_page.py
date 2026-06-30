@@ -131,7 +131,7 @@ class LoginPage:
                 btn
             )
 
-            time.sleep(1)
+            # time.sleep(1)
 
             try:
                 btn.click()
@@ -143,18 +143,32 @@ class LoginPage:
                     btn
                 )
 
+            # WebDriverWait(
+            #     self.driver,
+            #     30
+            # ).until(
+            #     lambda d:
+            #     len(
+            #         d.find_elements(
+            #             By.XPATH,
+            #             locators["otp_input"]
+            #         )
+            #     ) > 0
+            # )
+            
             WebDriverWait(
                 self.driver,
-                30
+                   30
             ).until(
-                lambda d:
-                len(
-                    d.find_elements(
-                        By.XPATH,
-                        locators["otp_input"]
-                    )
-                ) > 0
+               EC.visibility_of_element_located(
+                 (
+                   By.XPATH,
+                   locators["otp_input"]
+                )
             )
+        )
+
+            logger.info("✅ OTP screen opened")
 
             logger.info(
                 "✅ OTP screen opened"
