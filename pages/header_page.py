@@ -608,54 +608,80 @@ class HeaderPage:
         logger.info(f"✅ {message.text}")
         
         
+    # def verify_view_subscription_button(self):
+
+    #     btn = WebDriverWait(
+    #     self.driver,
+    #     20
+    # ).until(
+    #     EC.element_to_be_clickable(
+    #         (
+    #             By.XPATH,
+    #             locators["view_subscription_btn"]
+    #         )
+    #     )
+    # )
+
+    #     btn.click()
+
+    #     WebDriverWait(
+    #     self.driver,
+    #     20
+    # ).until(
+    #     EC.url_contains("/subscription")
+    # )
+
+    #     logger.info(f"✅ Redirected : {self.driver.current_url}")
+
+    #     self.driver.back()
+
+    #     WebDriverWait(
+    #     self.driver,
+    #     20
+    # ).until(
+    #     EC.url_contains("tab=subscription-devices")
+    # )
+
+    #     WebDriverWait(
+    #     self.driver,
+    #     20
+    # ).until(
+    #     EC.visibility_of_element_located(
+    #         (
+    #             By.XPATH,
+    #             locators["subscription_heading"]
+    #         )
+    #     )
+    # )
+
+    #     logger.info("✅ Returned to Subscription & Devices")
+    
     def verify_view_subscription_button(self):
 
-        btn = WebDriverWait(
-        self.driver,
-        20
-    ).until(
+        button = WebDriverWait(self.driver,20).until(
         EC.element_to_be_clickable(
-            (
-                By.XPATH,
-                locators["view_subscription_btn"]
-            )
+            (By.XPATH, locators["view_subscription_plans"])
         )
     )
 
-        assert btn.is_displayed()
+        button.click()
 
-        logger.info("✅ View Subscription Plans button displayed")
-
-        btn.click()
-
-        WebDriverWait(
-        self.driver,
-        20
-    ).until(
+        WebDriverWait(self.driver,20).until(
         EC.url_contains("/subscription")
     )
 
         assert "/subscription" in self.driver.current_url
 
-        logger.info(f"✅ Redirected : {self.driver.current_url}")
+        logger.info("✅ View Subscription Plans opened")
 
-    # Back to Subscription & Devices page
         self.driver.back()
-
-        WebDriverWait(
-        self.driver,
-        20
-    ).until(
-        EC.visibility_of_element_located(
-            (
-                By.XPATH,
-                locators["this_device_heading"]
-            )
-        )
+ 
+        WebDriverWait(self.driver,20).until(
+        EC.url_contains("tab=subscription-devices")
     )
 
-        logger.info("✅ Returned to Subscription & Devices page")
-            
+        logger.info("✅ Back to Subscription & Devices")
+        
    #UPGRADE     
        
     # def verify_upgrade_button(self):
@@ -677,34 +703,167 @@ class HeaderPage:
        
     #    #TRANSACTION
         
+    # def verify_transaction_history(self):
+
+    #     transaction = WebDriverWait(self.driver,20).until(
+    #     EC.element_to_be_clickable(
+    #         (By.XPATH, locators["transaction_history_btn"])
+    #     )
+    # )
+
+    #     assert transaction.is_displayed()
+    #     assert transaction.is_enabled()
+
+    #     logger.info("✅ Transaction History button displayed")
+
+    #     transaction.click()
+
+    #     logger.info("✅ Transaction History button clicked")
+    #     logger.info(f"Current URL = {self.driver.current_url}")
+    
     def verify_transaction_history(self):
 
-        transaction = WebDriverWait(self.driver,20).until(
+    # Click Transaction History
+        transaction = WebDriverWait(self.driver, 20).until(
         EC.element_to_be_clickable(
-            (By.XPATH, locators["transaction_history_btn"])
+            (
+                By.XPATH,
+                locators["transaction_history_btn"]
+            )
         )
     )
 
-        assert transaction.is_displayed()
-        assert transaction.is_enabled()
-
-        logger.info("✅ Transaction History button displayed")
-
-        transaction.click()
-
-        logger.info("✅ Transaction History button clicked")
-        logger.info(f"Current URL = {self.driver.current_url}")
-        
-    def verify_this_device(self):
-
-        WebDriverWait(self.driver,20).until(
-        lambda d: "tab=subscription-devices" in d.current_url
+        self.driver.execute_script(
+        "arguments[0].scrollIntoView({block:'center'});",
+        transaction
     )
 
-        heading = WebDriverWait(
-        self.driver,
-        20
-    ).until(
+        time.sleep(1)
+
+        try:
+            transaction.click()
+        except:
+            self.driver.execute_script(
+            "arguments[0].click();",
+            transaction
+        )
+
+        logger.info("✅ Transaction History clicked")
+
+    # Wait until Payment History heading appears
+        heading = WebDriverWait(self.driver, 20).until(
+        EC.visibility_of_element_located(
+            (
+                By.XPATH,
+                locators["payment_history_heading"]
+            )
+        )
+    )
+
+        assert heading.is_displayed(), "Payment History page not opened"
+
+        logger.info(f"✅ {heading.text}")
+
+    # Verify URL is still correct
+        assert "tab=subscription-devices" in self.driver.current_url
+
+        logger.info("✅ Subscription & Devices URL verified")
+    
+    
+    
+    
+    def verify_home_to_subscription_devices(self):
+
+        home = WebDriverWait(self.driver,20).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, locators["home_menu"])
+        )
+    )
+
+        home.click()
+
+        WebDriverWait(self.driver,20).until(
+        EC.url_contains("/home")
+    )
+
+        logger.info("✅ Home Page opened")
+
+        profile = WebDriverWait(self.driver,20).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, locators["profile_icon"])
+        )
+    )
+
+        profile.click()
+
+        subscription = WebDriverWait(self.driver,20).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, locators["subscription_devices"])
+        )
+    )
+
+        subscription.click()
+ 
+        WebDriverWait(self.driver,20).until(
+        EC.url_contains("tab=subscription-devices")
+    )
+
+        logger.info("✅ Subscription & Devices reopened")
+        
+        
+        
+    def verify_logo_navigation_and_this_device(self):
+
+    # Click ReelDrama Logo
+        logo = WebDriverWait(self.driver, 20).until(
+        EC.element_to_be_clickable(
+            (
+                By.XPATH,
+                locators["logo"]
+            )
+        )
+    )
+
+        logo.click()
+
+        WebDriverWait(self.driver, 20).until(
+        EC.url_contains("/home")
+    )
+
+        logger.info("✅ Navigated to Home page")
+
+    # Open Profile
+        profile = WebDriverWait(self.driver, 20).until(
+        EC.element_to_be_clickable(
+            (
+                By.XPATH,
+                locators["profile_icon"]
+            )
+        )
+    )
+
+        profile.click()
+
+    # Open Subscription & Devices
+        subscription = WebDriverWait(self.driver, 20).until(
+        EC.element_to_be_clickable(
+            (
+                By.XPATH,
+                locators["subscription_devices"]
+            )
+        )
+    )
+
+        subscription.click()
+
+        WebDriverWait(self.driver, 20).until(
+        EC.url_contains("subscription-devices")
+    )
+
+        logger.info("✅ Subscription & Devices opened again")
+
+    # Verify This Device Heading
+        heading = WebDriverWait(self.driver,20).until(
         EC.visibility_of_element_located(
             (
                 By.XPATH,
@@ -713,15 +872,13 @@ class HeaderPage:
         )
     )
 
-        self.driver.execute_script(
-        "arguments[0].scrollIntoView({block:'center'});",
-        heading
-    )
+        assert heading.is_displayed()
 
-        device = WebDriverWait(
-        self.driver,
-        20
-    ).until(
+        logger.info("✅ This Device heading displayed")
+
+    # ---------- PASTE YOUR CODE HERE ----------
+
+        device = WebDriverWait(self.driver,20).until(
         EC.visibility_of_element_located(
             (
                 By.XPATH,
@@ -730,11 +887,12 @@ class HeaderPage:
         )
     )
 
-        last_used = WebDriverWait(
-        self.driver,
-        20
-    ).until(
-        EC.visibility_of_element_located(
+        logger.info(f"✅ Device Name : {device.text}")
+ 
+        assert device.text.strip() != ""
+  
+        last_used = WebDriverWait(self.driver,20).until(
+         EC.visibility_of_element_located(
             (
                 By.XPATH,
                 locators["last_used"]
@@ -742,10 +900,64 @@ class HeaderPage:
         )
     )
 
-        assert heading.is_displayed()
-        assert device.is_displayed()
-        assert last_used.is_displayed()
-
-        logger.info(f"✅ {heading.text}")
-        logger.info(f"✅ Device : {device.text}")
         logger.info(f"✅ {last_used.text}")
+
+        assert last_used.text.strip() != ""
+    
+    
+    
+    
+    
+    
+    
+        
+    # def verify_this_device(self):
+
+    #     heading = WebDriverWait(
+    #     self.driver,
+    #     20
+    # ).until(
+    #     EC.visibility_of_element_located(
+    #         (
+    #             By.XPATH,
+    #             locators["this_device_heading"]
+    #         )
+    #     )
+    # )
+
+    #     self.driver.execute_script(
+    #     "arguments[0].scrollIntoView({block:'center'});",
+    #     heading
+    # )
+
+    #     device = WebDriverWait(
+    #     self.driver,
+    #     20
+    # ).until(
+    #     EC.visibility_of_element_located(
+    #         (
+    #             By.XPATH,
+    #             locators["device_name"]
+    #         )
+    #     )
+    # )
+
+    #     last_used = WebDriverWait(
+    #     self.driver,
+    #     20
+    # ).until(
+    #     EC.visibility_of_element_located(
+    #         (
+    #             By.XPATH,
+    #             locators["last_used"]
+    #         )
+    #     )
+    # )
+
+    #     assert heading.is_displayed()
+    #     assert device.is_displayed()
+    #     assert last_used.is_displayed()
+
+    #     logger.info(f"✅ {heading.text}")
+    #     logger.info(f"✅ {device.text}")
+    #     logger.info(f"✅ {last_used.text}")

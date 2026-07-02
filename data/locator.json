@@ -101,15 +101,18 @@
 
 "no_active_plan_message": "//p[contains(text(),'active subscription')]",
 
-"view_subscription_btn": "//button[contains(.,'View Subscription Plans')]",
+"view_subscription_plans":"//button[contains(.,'View Subscription Plans')]",
 
-"transaction_history_btn": "//button[contains(.,'Transaction History')]",
+"transaction_history_btn":"//button[contains(.,'Transaction History')]",
 
-"this_device_heading": "//h4[contains(normalize-space(),'This Device')]",
+"payment_history_heading": "//h2[contains(normalize-space(),'Payment History')]",
 
-"device_name": "//h4[contains(normalize-space(),'This Device')]/following::h6[1]",
+"this_device_heading":"//h4[contains(normalize-space(),'This Device')]",
 
-"last_used": "//h4[contains(normalize-space(),'This Device')]/following::span[contains(.,'Last used')][1]"
+"device_name": "//h4[contains(.,'This Device')]/following::h6[1]",
+
+"last_used": "//h4[contains(.,'This Device')]/following::span[contains(.,'Last used')][1]"
+
 
    }
 }

@@ -62,6 +62,20 @@ def test_edit_profile_page(login):
 
     header.verify_edit_profile_page()
     
+# def test_subscription_devices(login):
+
+#     header = HeaderPage(login.driver)
+
+#     header.open_subscription_devices()
+
+#     header.verify_subscription_devices_page()
+
+#     header.verify_view_subscription_button()
+
+#     header.verify_transaction_history()
+
+#     header.verify_this_device()
+
 def test_subscription_devices(login):
 
     header = HeaderPage(login.driver)
@@ -74,4 +88,4 @@ def test_subscription_devices(login):
 
     header.verify_transaction_history()
 
-    header.verify_this_device()
+    header.verify_logo_navigation_and_this_device()
