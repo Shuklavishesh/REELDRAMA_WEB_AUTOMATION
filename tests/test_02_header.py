@@ -89,3 +89,9 @@ def test_subscription_devices(login):
     header.verify_transaction_history()
 
     header.verify_logo_navigation_and_this_device()
+    
+def test_my_watchlist(login):
+
+    header = HeaderPage(login.driver)
+
+    header.verify_my_watchlist()

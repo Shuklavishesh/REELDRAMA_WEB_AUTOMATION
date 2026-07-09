@@ -57,8 +57,19 @@ def driver(request, config):
     browser = request.config.getoption("--browser")
 
     driver = get_driver(browser)
+    
+    print(driver.session_id)
+
+    print(driver.window_handles)
+
+    print(driver.current_url)
 
     driver.get(config["base_url"])
+    
+    print(driver.title)
+
+    print(driver.current_url)
+    
 
     driver.maximize_window()
 
@@ -84,28 +95,6 @@ def testdata():
     return TEST_DATA
 
 
-# @pytest.fixture
-# def login(driver, testdata):
-
-#     from pages.login_page import LoginPage
-#     from utils.otp_handler import get_otp_from_api
-
-#     login_page = LoginPage(driver)
-
-#     mobile = testdata["valid_user"]["mobile"]
-
-#     login_page.enter_mobile(mobile)
-
-#     login_page.click_get_otp()
-
-#     otp = get_otp_from_api(mobile)
-
-#     login_page.enter_otp(otp)
-
-#     login_page.verify_otp()
-
-#     return login_page
-
 
 @pytest.fixture
 def login(driver, testdata):
@@ -126,6 +115,12 @@ def login(driver, testdata):
     login_page.enter_otp(otp)
 
     login_page.verify_otp()
+    
+    print(driver.current_url)
+
+    print(driver.title)
+
+    driver.save_screenshot("after_verify.png")
 
     return login_page
 

@@ -111,8 +111,61 @@
 
 "device_name": "//h4[contains(.,'This Device')]/following::h6[1]",
 
-"last_used": "//h4[contains(.,'This Device')]/following::span[contains(.,'Last used')][1]"
+"last_used": "//h4[contains(.,'This Device')]/following::span[contains(.,'Last used')][1]",
+
+"my_watchlist_heading": "//h2[contains(normalize-space(),'My watchlist')]",
+
+"empty_watchlist_heading": "//h2[contains(normalize-space(),'Your Watchlist is Empty')]",
+
+"empty_watchlist_message": "//p[contains(normalize-space(.),'Videos you add here will appear here for easy access')]",
+
+"explore_content_btn": "//button[contains(normalize-space(),'Explore New Content')]"
+
+  },
 
 
-   }
+"user_profile_page":{
+  
+"my_account_heading": "//h2[contains(text(),'My Account')]",
+
+"profile_name": "//h6[contains(@class,'MuiTypography-h6')]",
+ 
+"profile_mobile": "//p[contains(text(),'+91')]",
+
+"heading":"ul[@id='composition-menu']//a",
+
+"edit_profile_btn": "//button[contains(.,'Edit Profile')]",
+
+"mobile_input":"//input[@id='mobileNumber']",
+
+"email_input":"//input[@id='email']",
+
+"full_name":"//input[@id='fullName']",
+
+"country":"//input[@id='country']",
+
+"country_code":"//input[@id='countrycode']",
+
+"dob":"//input[contains(@class,'MuiPickersInputBase-input')]",
+
+"male":"//input[@value='male']",
+
+"female":"//input[@value='female']",
+
+"other":"//input[@value='other']",
+
+"save_btn":"//button[contains(.,'Save')]",
+
+"full_name_input": "//input[@id='fullName']",
+
+"mobile_number_input": "//input[@id='mobileNumber']",
+
+"country_input": "//input[@id='country']",
+
+"country_code_input": "//input[@id='countrycode']",
+
+"dob_input": "//input[contains(@class,'MuiPickersInputBase-input')]"
+
+}
+
 }

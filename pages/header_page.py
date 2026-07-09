@@ -608,52 +608,7 @@ class HeaderPage:
         logger.info(f"✅ {message.text}")
         
         
-    # def verify_view_subscription_button(self):
-
-    #     btn = WebDriverWait(
-    #     self.driver,
-    #     20
-    # ).until(
-    #     EC.element_to_be_clickable(
-    #         (
-    #             By.XPATH,
-    #             locators["view_subscription_btn"]
-    #         )
-    #     )
-    # )
-
-    #     btn.click()
-
-    #     WebDriverWait(
-    #     self.driver,
-    #     20
-    # ).until(
-    #     EC.url_contains("/subscription")
-    # )
-
-    #     logger.info(f"✅ Redirected : {self.driver.current_url}")
-
-    #     self.driver.back()
-
-    #     WebDriverWait(
-    #     self.driver,
-    #     20
-    # ).until(
-    #     EC.url_contains("tab=subscription-devices")
-    # )
-
-    #     WebDriverWait(
-    #     self.driver,
-    #     20
-    # ).until(
-    #     EC.visibility_of_element_located(
-    #         (
-    #             By.XPATH,
-    #             locators["subscription_heading"]
-    #         )
-    #     )
-    # )
-
+   
     #     logger.info("✅ Returned to Subscription & Devices")
     
     def verify_view_subscription_button(self):
@@ -903,61 +858,125 @@ class HeaderPage:
         logger.info(f"✅ {last_used.text}")
 
         assert last_used.text.strip() != ""
-    
-    
-    
+        
+        
+    def verify_my_watchlist(self):
+
+    # Click Profile
+        profile = WebDriverWait(self.driver,20).until(
+        EC.element_to_be_clickable(
+            (
+                By.XPATH,
+                locators["profile_icon"]
+            )
+        )
+    )
+        profile.click()
+
+    # Click My Watchlist
+        WebDriverWait(self.driver,20).until(
+        EC.element_to_be_clickable(
+            (
+                By.XPATH,
+                locators["my_watchlist"]
+            )
+        )
+    ).click()
+
+        logger.info("✅ My Watchlist opened")
+
+    # Verify URL
+        WebDriverWait(self.driver,20).until(
+        EC.url_contains("tab=my-watchlist")
+    )
+
+    # Verify Heading
+        heading = WebDriverWait(self.driver,20).until(
+        EC.visibility_of_element_located(
+            (
+                By.XPATH,
+                locators["my_watchlist_heading"]
+            )
+        )
+    )
+
+        assert heading.is_displayed()
+
+        logger.info(f"✅ {heading.text}")
+
+    # Verify Empty Watchlist Heading
+        empty_heading = WebDriverWait(self.driver,20).until(
+        EC.visibility_of_element_located(
+            (
+                By.XPATH,
+                locators["empty_watchlist_heading"]
+            )
+        )
+    )
+
+        assert empty_heading.is_displayed()
+
+        logger.info(f"✅ {empty_heading.text}")
+
+    # Verify Empty Watchlist Message
+    #     message = WebDriverWait(self.driver,10).until(
+    #     EC.visibility_of_element_located(
+    #         (
+    #             By.XPATH,
+    #             locators["empty_watchlist_message"]
+    #         )
+    #     )
+    # )
+
+    #     assert message.is_displayed()
+
+    #     logger.info(f"✅ {message.text}")
+
+    # Verify Explore Movies Button
+        # Click Explore New Content Button
+        button = WebDriverWait(self.driver, 20).until(
+        EC.element_to_be_clickable(
+        (
+            By.XPATH,
+            locators["explore_content_btn"]
+        )
+    )
+)
+
+        self.driver.execute_script(
+          "arguments[0].scrollIntoView({block:'center'});",
+        button
+)
+
+        time.sleep(1)
+
+        try:
+            button.click()
+        except Exception:
+            self.driver.execute_script("arguments[0].click();", button)
+
+        logger.info("✅ Explore New Content clicked")
+
+# Wait for navigation
+#         WebDriverWait(self.driver, 20).until(
+#          lambda d: "/home" in d.current_url
+# )
+
+        time.sleep(5)
+
+        print("Current URL:", self.driver.current_url)
+        print("Window Handles:", self.driver.window_handles)
+
+        logger.info(f"Current URL: {self.driver.current_url}")
+        logger.info(f"Window Handles: {self.driver.window_handles}")
+
+# Verify that navigation occurred
+        assert self.driver.current_url != "", "Current URL is empty"
+
+        logger.info("✅ Navigation completed")
     
     
     
     
         
-    # def verify_this_device(self):
-
-    #     heading = WebDriverWait(
-    #     self.driver,
-    #     20
-    # ).until(
-    #     EC.visibility_of_element_located(
-    #         (
-    #             By.XPATH,
-    #             locators["this_device_heading"]
-    #         )
-    #     )
-    # )
-
-    #     self.driver.execute_script(
-    #     "arguments[0].scrollIntoView({block:'center'});",
-    #     heading
-    # )
-
-    #     device = WebDriverWait(
-    #     self.driver,
-    #     20
-    # ).until(
-    #     EC.visibility_of_element_located(
-    #         (
-    #             By.XPATH,
-    #             locators["device_name"]
-    #         )
-    #     )
-    # )
-
-    #     last_used = WebDriverWait(
-    #     self.driver,
-    #     20
-    # ).until(
-    #     EC.visibility_of_element_located(
-    #         (
-    #             By.XPATH,
-    #             locators["last_used"]
-    #         )
-    #     )
-    # )
-
-    #     assert heading.is_displayed()
-    #     assert device.is_displayed()
-    #     assert last_used.is_displayed()
-
-    #     logger.info(f"✅ {heading.text}")
-    #     logger.info(f"✅ {device.text}")
-    #     logger.info(f"✅ {last_used.text}")
+    

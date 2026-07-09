@@ -250,6 +250,50 @@
   "SUB_012": {
     "objective": "To Verify package switch",
     "method": "test_subscription_package_switch"
+  },
+
+  
+  "EUP_001": {
+    "objective": "Verify User Profile screen on first login",
+    "method": "test_user_profile_first_login"
+  },
+
+  "EUP_002": {
+    "objective": "Verify mobile number prefill",
+    "method": "test_mobile_number_prefill"
+  },
+  "EUP_003": {
+    "objective": "Verify email prefill",
+    "method": "test_email_prefill"
+  },
+  "EUP_004": {
+    "objective": "Verify mandatory profile details",
+    "method": "test_complete_mandatory_profile_details"
+  },
+  "EUP_005": {
+    "objective": "Verify mandatory field visibility",
+    "method": "test_profile_mandatory_fields_visibility"
+  },
+  "EUP_006": {
+    "objective": "Verify email cannot be modified",
+    "method": "test_email_non_editable_after_save"
+  },
+  "EUP_007": {
+    "objective": "Verify mobile number cannot be modified",
+    "method": "test_mobile_number_non_editable_after_save"
+  },
+  "EUP_008": {
+    "objective": "Verify mandatory field validation",
+    "method": "test_profile_mandatory_field_validation"
+  },
+  "EUP_009": {
+    "objective": "Verify invalid email validation",
+    "method": "test_invalid_email_validation"
+  },
+  "EUP_010": {
+    "objective": "Verify Date of Birth selection",
+    "method": "test_date_of_birth_selection"
   }
+
 }
 
