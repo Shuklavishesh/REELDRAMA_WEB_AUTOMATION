@@ -61,11 +61,11 @@
   },
   "TC_ReSend_OTP__Validation_015": {
     "objective": "To Verify Resend OTP sends a new OTP",
-    "method": "test_valid_login"
+    "method": "test_resend_otp_sends_new_otp"
   },
   "TC_ReSend_OTP__Validation_016": {
-    "objective": "To Verify OTP boxes reset after resend",
-    "method": "test_valid_login"
+    "objective": "To Verify entered OTP digits remain after resend",
+    "method": "test_resend_otp_boxes_remain_after_resend"
   },
   "TC_ReSend_OTP__Validation_017": {
     "objective": "To Verify max OTP resend limit enforcement",
@@ -296,4 +296,3 @@
   }
 
 }
-

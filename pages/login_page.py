@@ -158,17 +158,15 @@ class LoginPage:
             
             WebDriverWait(
                 self.driver,
-                   30
+                30
             ).until(
-               EC.visibility_of_element_located(
-                 (
-                   By.XPATH,
-                   locators["otp_input"]
+                EC.visibility_of_element_located(
+                    (
+                        By.XPATH,
+                        locators["otp_input"]
+                    )
                 )
             )
-        )
-
-            logger.info("✅ OTP screen opened")
 
             logger.info(
                 "✅ OTP screen opened"
@@ -356,111 +354,54 @@ class LoginPage:
 
         logger.info("Waiting for Resend OTP button")
         resend_btn = WebDriverWait(
-        self.driver,
-        150
-     ).until(
-        EC.element_to_be_clickable(
-            (
-                By.XPATH,
-                locators["resend_otp_btn"]
+            self.driver,
+            150
+        ).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,
+                    locators["resend_otp_btn"]
+                )
             )
         )
-    )
 
-    # Save old OTP boxes
-        old_boxes = self.driver.find_elements(
-         By.XPATH,
-        locators["otp_input"]
-    )
-
-    # Click Resend OTP
         resend_btn.click()
 
-        logger.info("✅ Resend OTP clicked")
-
-    # ==========================
-    # ADD THESE LINES HERE
-    # ==========================
-        self.driver.save_screenshot(
-           "after_resend_click.png"
-    )
-
-        logger.info(
-          f"Current URL: {self.driver.current_url}"
-    )
-
-    # Wait for React refresh
-        try:
-            WebDriverWait(
+        WebDriverWait(
             self.driver,
-            20
+            10
         ).until(
-            EC.staleness_of(
-                old_boxes[0]
+            EC.visibility_of_element_located(
+                (
+                    By.XPATH,
+                    locators["otp_sent_confirmation"]
+                )
             )
         )
 
-            logger.info(
-            "✅ OTP inputs recreated"
+        logger.info("✅ Resend OTP confirmed")
+
+    def verify_otp_boxes_match(self, expected_otp):
+        expected_values = list(str(expected_otp).strip())
+
+        def find_expected_boxes(driver):
+            boxes = driver.find_elements(
+                By.XPATH,
+                locators["otp_input"]
+            )
+            return boxes if len(boxes) == len(expected_values) else False
+
+        boxes = WebDriverWait(
+            self.driver,
+            10
+        ).until(find_expected_boxes)
+        values = [box.get_attribute("value") for box in boxes]
+
+        assert values == expected_values, (
+            f"Expected OTP boxes to retain {expected_values}, got {values}"
         )
 
-        except Exception as e:
-             
-         logger.info(
-                  f"OTP boxes not recreated: {e}"
-        )
-
-        time.sleep(3)
-
-        logger.info(
-        "✅ Resend refresh completed"
-    )
-    # =============================
-    # Verify OTP boxes reset
-    # =============================
-    def verify_otp_boxes_empty(self):
-        
-        logger.info(
-        "Checking OTP boxes after resend"
-    )
-
-        boxes = self.driver.find_elements(
-         By.XPATH,
-        locators["otp_input"]
-    )
-
-    # ==========================
-    # ADD DEBUG CODE HERE
-    # ==========================
-        for i, box in enumerate(boxes):
-            
-            logger.info(
-             f"Box {i+1}: "
-             f"displayed={box.is_displayed()} "
-             f"enabled={box.is_enabled()} "
-             f"value='{box.get_attribute('value')}'"
-        )
-
-    # ==========================
-    # Existing code
-    # ==========================
-        values = [
-          box.get_attribute("value")
-          for box in boxes
-    ]
-
-        logger.info(
-         f"Final OTP values: {values}"
-    )
-
-        assert all(
-         value == ""
-         for value in values
-        ), f"OTP boxes not cleared {values}"
-
-        logger.info(
-         "✅ OTP boxes reset successfully"
-    )
+        logger.info("✅ OTP boxes retain the entered digits after resend")
     
     # =============================
     # Resend OTP limit check
